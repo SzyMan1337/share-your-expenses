@@ -6,8 +6,6 @@ import 'package:share_your_expenses/shared/login_inputs.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  static String routeName = 'loginScreen';
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -82,11 +80,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Don't have an account?",
+                    "Don't have an account? ",
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
                   const Text(
-                    "Register",
+                    " Register",
                     style: TextStyle(
                       color: darkBrown,
                       fontWeight: FontWeight.w500,
