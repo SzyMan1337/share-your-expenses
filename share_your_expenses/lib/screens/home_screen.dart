@@ -5,12 +5,6 @@ class HomeScreen extends StatefulWidget {
   static String routeName = 'homeScreen';
 
   const HomeScreen({Key? key}) : super(key: key);
-  static Route<HomeScreen> route() {
-    return MaterialPageRoute<HomeScreen>(
-      settings: RouteSettings(name: routeName),
-      builder: (BuildContext context) => const HomeScreen(),
-    );
-  }
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -45,11 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 CommonButton(
-                  onPressed: () {
-                    // CoffeeRouter.instance.push(
-                    //   LoginScreen.route(loginScaffoldKey),
-                    // );
-                  },
+                  onPressed: () {},
                   text: 'Register',
                   highlighColor: true,
                 ),
@@ -57,11 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                 ),
                 CommonButton(
-                  onPressed: () {
-                    // Navigator.of(context).push(
-                    //   LoginScreen.route(loginScaffoldKey),
-                    // );
-                  },
+                  onPressed: () {},
                   text: 'Log In',
                 ),
               ],
