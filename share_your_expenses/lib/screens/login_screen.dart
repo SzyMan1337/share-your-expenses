@@ -29,12 +29,17 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: const BackButton(color: Colors.white),
+        centerTitle: true,
         title: const Text("Login"),
         actions: [
-          Image.asset(
-            "assets/images/logo.png",
-            semanticLabel: 'logo',
-            fit: BoxFit.fitWidth,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Image.asset(
+              "assets/images/logo.png",
+              semanticLabel: 'logo',
+              fit: BoxFit.fitWidth,
+            ),
           ),
         ],
       ),
