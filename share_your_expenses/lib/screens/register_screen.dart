@@ -128,7 +128,9 @@ class _RegisterSreenState extends State<RegisterSreen> {
           context: context);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      if (user != null) {}
+      if (user != null) {
+        Navigator.pushNamedAndRemoveUntil(context, '/groups', (route) => false);
+      }
     }
   }
 }

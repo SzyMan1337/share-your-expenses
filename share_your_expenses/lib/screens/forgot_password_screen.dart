@@ -6,7 +6,7 @@ import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/utils/validators.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  ForgotPasswordScreen({Key? key}) : super(key: key);
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
   _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();

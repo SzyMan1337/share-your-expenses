@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:share_your_expenses/screens/add_exepnses_group_screen.dart';
+import 'package:share_your_expenses/screens/add_expense_screen.dart';
 import 'package:share_your_expenses/screens/forgot_password_screen.dart';
 import 'package:share_your_expenses/screens/home_screen.dart';
 import 'package:share_your_expenses/screens/loading_screen.dart';
 import 'package:share_your_expenses/screens/login_screen.dart';
-import 'package:share_your_expenses/screens/logout_screen.dart';
 import 'package:share_your_expenses/screens/manage_groups_screen.dart';
+import 'package:share_your_expenses/screens/profile_screen.dart';
 import 'package:share_your_expenses/screens/register_screen.dart';
 
 class ShareExpensesApp extends StatelessWidget {
@@ -19,7 +21,10 @@ class ShareExpensesApp extends StatelessWidget {
         '/register': (context) => const RegisterSreen(),
         '/groups': (context) => const ManageGroupsScreen(),
         '/home': (context) => const HomeScreen(),
-        '/forgot-password': (context) => ForgotPasswordScreen()
+        '/forgot-password': (context) => const ForgotPasswordScreen(),
+        '/add-expenses-group': (context) => const AddExepensesGroupScreen(),
+        '/add-expense': (context) => const AddExpenseScreen(),
+        '/profile': (context) => const ProfileScreen(),
       },
       theme: ThemeData(primarySwatch: Colors.blueGrey),
     );

@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share_your_expenses/services/auth_service.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/const.dart';
+import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/shared/login_inputs.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
+  final AuthService _authService = AuthService.instance;
 
   @override
   void initState() {
@@ -88,7 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               CommonButton(
-                onPressed: () {},
+                onPressed: () {
+                  _onSubmitLoginButton();
+                },
                 text: 'login',
               ),
               Row(
@@ -120,5 +126,36 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  bool _isFormValidated() {
+    final FormState form = formKey.currentState!;
+    return form.validate();
+  }
+
+  _onSubmitLoginButton() async {
+    if (_isFormValidated()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        loadingSnackBar(
+          text: " Signing-In...",
+        ),
+      );
+
+      final User? user = await _authService.signInWithEmailAndPassword(
+        email: _emailFieldController.text,
+        password: _passwordFieldController.text,
+        context: context,
+      );
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      if (user != null) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/groups',
+          (route) => false,
+        );
+      }
+    }
   }
 }
