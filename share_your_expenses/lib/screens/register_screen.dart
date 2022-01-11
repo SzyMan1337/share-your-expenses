@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share_your_expenses/services/auth_service.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/const.dart';
+import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/shared/login_inputs.dart';
 
 class RegisterSreen extends StatefulWidget {
@@ -15,6 +18,8 @@ class _RegisterSreenState extends State<RegisterSreen> {
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
 
+  final AuthService _authService = AuthService.instance;
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +32,14 @@ class _RegisterSreenState extends State<RegisterSreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: const BackButton(color: Colors.white),
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(
+              context,
+            );
+          },
+        ),
         centerTitle: true,
         title: const Text("Register"),
         actions: [
@@ -61,7 +73,9 @@ class _RegisterSreenState extends State<RegisterSreen> {
                 passwordFieldController: _passwordFieldController,
               ),
               CommonButton(
-                onPressed: () {},
+                onPressed: () {
+                  _onSubmitRegisterButton(context);
+                },
                 text: 'Register',
               ),
               Row(
@@ -71,11 +85,19 @@ class _RegisterSreenState extends State<RegisterSreen> {
                     "Have an account? ",
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
-                  const Text(
-                    " Sign In",
-                    style: TextStyle(
-                      color: darkBrown,
-                      fontWeight: FontWeight.w500,
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/login',
+                      );
+                    },
+                    child: const Text(
+                      " Sign In",
+                      style: TextStyle(
+                        color: darkBrown,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],
@@ -85,5 +107,28 @@ class _RegisterSreenState extends State<RegisterSreen> {
         ),
       ),
     );
+  }
+
+  bool _isFormValidated() {
+    final FormState form = formKey.currentState!;
+    return form.validate();
+  }
+
+  _onSubmitRegisterButton(context) async {
+    if (_isFormValidated()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        loadingSnackBar(
+          text: " Creating user...",
+        ),
+      );
+
+      final User? user = await _authService.createUserWithEmailAndPassword(
+          email: _emailFieldController.text,
+          password: _passwordFieldController.text,
+          context: context);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      if (user != null) {}
+    }
   }
 }

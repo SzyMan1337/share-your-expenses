@@ -18,21 +18,29 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Welcome"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Image.asset(
+              "assets/images/logo.png",
+              semanticLabel: 'logo',
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Image.asset(
-              "assets/images/logo.png",
-              height: 100,
-              width: 100,
-            ),
-            Image.asset(
-              "assets/images/friends.jpg",
-              height: MediaQuery.of(context).size.height / 3,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.fitWidth,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Image.asset(
+                "assets/images/friends.jpg",
+                height: MediaQuery.of(context).size.height / 3,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fitWidth,
+              ),
             ),
             Text(
               "Share your expenses now!",
@@ -43,7 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 CommonButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/register',
+                    );
+                  },
                   text: 'Register',
                   highlighColor: true,
                 ),
@@ -51,7 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                 ),
                 CommonButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/login',
+                    );
+                  },
                   text: 'Log In',
                 ),
               ],

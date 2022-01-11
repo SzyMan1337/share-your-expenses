@@ -27,7 +27,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: const BackButton(color: Colors.white),
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(
+              context,
+            );
+          },
+        ),
         centerTitle: true,
         title: const Text("Login"),
         actions: [
@@ -62,12 +69,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: const <Widget>[
-                  Text(
-                    "Forgot password?",
-                    style: TextStyle(
-                      color: darkBrown,
-                      fontWeight: FontWeight.w500,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/forgot-password',
+                      );
+                    },
+                    child: const Text(
+                      "Forgot password?",
+                      style: TextStyle(
+                        color: darkBrown,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],
@@ -83,11 +98,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Don't have an account? ",
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
-                  const Text(
-                    " Register",
-                    style: TextStyle(
-                      color: darkBrown,
-                      fontWeight: FontWeight.w500,
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/register',
+                      );
+                    },
+                    child: const Text(
+                      " Register",
+                      style: TextStyle(
+                        color: darkBrown,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],

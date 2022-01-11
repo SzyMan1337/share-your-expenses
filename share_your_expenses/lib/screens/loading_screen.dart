@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:share_your_expenses/services/auth_service.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -9,6 +10,8 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  final AuthService _authService = AuthService.instance;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +33,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
     super.initState();
     Future.delayed(
       const Duration(milliseconds: 2000),
-      () {},
+      () {
+        if (_authService.currentUser != null) {
+          Navigator.popAndPushNamed(
+            context,
+            '/groups',
+          );
+        } else {
+          Navigator.popAndPushNamed(
+            context,
+            '/home',
+          );
+        }
+      },
     );
   }
 }
