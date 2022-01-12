@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
+import 'package:share_your_expenses/shared/menu_bottom.dart';
 
 class ManageGroupsScreen extends StatefulWidget {
   const ManageGroupsScreen({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class _ManageGroupsScreenState extends State<ManageGroupsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const MenuBottom(),
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Manage Groups"),
@@ -22,6 +24,13 @@ class _ManageGroupsScreenState extends State<ManageGroupsScreen> {
           Navigator.pushNamed(context, '/profile');
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, '/add-expenses-group');
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

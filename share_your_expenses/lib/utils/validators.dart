@@ -12,4 +12,8 @@ class Validators {
   static String? validatePassword(String? value) {
     return value!.isEmpty ? 'Password can\'t be empty' : null;
   }
+
+  static String? validateGroupName(String? value) {
+    return value!.isEmpty ? 'Group name can\'t be empty' : null;
+  }
 }

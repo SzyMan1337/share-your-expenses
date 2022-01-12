@@ -21,6 +21,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Forgot Password"),
         actions: [
@@ -31,42 +32,48 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                TextFormField(
-                  key: const Key('email'),
-                  controller: _emailFieldController,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                    hintText: 'example@email.com',
-                    labelStyle: const TextStyle(color: darkBrown),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: darkBrown),
-                    ),
-                    border: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: darkBrown),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Center(
+                child: Image.asset(
+                  "assets/images/login.jpg",
+                  height: MediaQuery.of(context).size.height / 3,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              TextFormField(
+                key: const Key('email'),
+                controller: _emailFieldController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  hintText: 'example@email.com',
+                  labelStyle: const TextStyle(color: darkBrown),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
                     ),
                   ),
-                  cursorColor: darkBrown,
-                  validator: Validators.validateEmail,
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: darkBrown),
+                  ),
+                  border: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: darkBrown),
+                  ),
                 ),
-                CommonButton(
-                  onPressed: _onSubmitLoginButton,
-                  text: 'Submit',
-                ),
-              ],
-            ),
+                cursorColor: darkBrown,
+                validator: Validators.validateEmail,
+              ),
+              CommonButton(
+                onPressed: _onSubmitLoginButton,
+                text: 'Submit',
+              ),
+            ],
           ),
         ),
       ),

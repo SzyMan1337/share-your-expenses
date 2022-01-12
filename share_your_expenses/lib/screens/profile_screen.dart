@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/services/auth_service.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
+import 'package:share_your_expenses/shared/menu_bottom.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -22,53 +23,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return const CircularProgressIndicator();
         }
         if (snapshot.hasError) {
-          return const Scaffold(body: Center(child: Text('Error!')));
+          return Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text("Profile"),
+              ),
+              bottomNavigationBar: const MenuBottom(),
+              body: const Center(
+                child: Text('Error!'),
+              ));
         }
         final User? user = snapshot.data;
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Center(
-              child: Column(
-                children: <Widget>[
-                  Image.asset(
-                    "assets/images/login.jpg",
-                    height: MediaQuery.of(context).size.height / 3,
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ],
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text("Profile"),
+          ),
+          bottomNavigationBar: const MenuBottom(),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Center(
+                child: Column(
+                  children: <Widget>[
+                    Image.asset(
+                      "assets/images/login.jpg",
+                      height: MediaQuery.of(context).size.height / 3,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            if (user != null && user.isAnonymous)
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Text('You are logged in annonymously!'),
-              ),
-            if (user != null && !user.isAnonymous)
+              if (user != null && user.isAnonymous)
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Text('You are logged in annonymously!'),
+                ),
+              if (user != null && !user.isAnonymous)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text('Email: ${user.email}'),
+                ),
+              if (user != null && !user.emailVerified && !user.isAnonymous)
+                CommonButton(
+                  text: 'Verify Your Email',
+                  onPressed: () {
+                    user.sendEmailVerification();
+                  },
+                ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Text('Email: ${user.email}'),
+                child: CommonButton(
+                  onPressed: () async {
+                    await _authService.signOut();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/home', (route) => false);
+                  },
+                  text: 'Logout',
+                ),
               ),
-            if (user != null && !user.emailVerified && !user.isAnonymous)
-              CommonButton(
-                text: 'Verify Your Email',
-                onPressed: () {
-                  user.sendEmailVerification();
-                },
-              ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: CommonButton(
-                onPressed: () async {
-                  await _authService.signOut();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/home', (route) => false);
-                },
-                text: 'Logout',
-              ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
