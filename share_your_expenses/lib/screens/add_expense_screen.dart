@@ -10,6 +10,19 @@ class AddExpenseScreen extends StatefulWidget {
 class _AddExpenseScreenState extends State<AddExpenseScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(
+              context,
+            );
+          },
+        ),
+        centerTitle: true,
+        title: const Text("New Expense"),
+      ),
+    );
   }
 }
