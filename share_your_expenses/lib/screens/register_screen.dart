@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share_your_expenses/enums/role.dart';
 import 'package:share_your_expenses/services/auth_service.dart';
+import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/shared/login_inputs.dart';
+import 'package:share_your_expenses/utils/validators.dart';
 
 class RegisterSreen extends StatefulWidget {
   const RegisterSreen({Key? key}) : super(key: key);
@@ -17,14 +20,17 @@ class _RegisterSreenState extends State<RegisterSreen> {
   final formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
+  final _usernameFieldController = TextEditingController();
 
   final AuthService _authService = AuthService.instance;
+  final FirestoreService _firestoreService = FirestoreService.instance;
 
   @override
   void initState() {
     super.initState();
     _emailFieldController.text = 'example@email.com';
     _passwordFieldController.text = 'password';
+    _usernameFieldController.text = 'Bob123';
   }
 
   @override
@@ -67,6 +73,28 @@ class _RegisterSreenState extends State<RegisterSreen> {
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.fitWidth,
                 ),
+              ),
+              TextFormField(
+                key: const Key('username'),
+                controller: _usernameFieldController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  hintText: 'Bob123',
+                  labelStyle: const TextStyle(color: darkBrown),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: darkBrown),
+                  ),
+                  border: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: darkBrown),
+                  ),
+                ),
+                cursorColor: darkBrown,
+                validator: Validators.validateUserName,
               ),
               LoginInputs(
                 emailFieldController: _emailFieldController,
@@ -129,6 +157,9 @@ class _RegisterSreenState extends State<RegisterSreen> {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       if (user != null) {
+        await _firestoreService.createUser(
+            user.uid, [UserRole.customer], _usernameFieldController.text);
+
         Navigator.pushNamedAndRemoveUntil(context, '/groups', (route) => false);
       }
     }

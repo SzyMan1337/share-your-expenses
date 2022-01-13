@@ -21,7 +21,7 @@ class _ManageGroupsScreenState extends State<ManageGroupsScreen> {
       body: CommonButton(
         text: 'dupa',
         onPressed: () {
-          Navigator.pushNamed(context, '/profile');
+          Navigator.pushNamed(context, '/add-expense');
         },
       ),
       floatingActionButton: FloatingActionButton(
