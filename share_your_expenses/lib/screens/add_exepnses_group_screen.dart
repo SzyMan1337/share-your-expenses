@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:share_your_expenses/services/auth_service.dart';
+import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/shared/loading_snackbar.dart';
@@ -16,6 +18,9 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
   final formKey = GlobalKey<FormState>();
   final _groupNameFieldController = TextEditingController();
   final _groupDescriptionFieldController = TextEditingController();
+
+  final FirestoreService _firestoreService = FirestoreService.instance;
+  final AuthService _authService = AuthService.instance;
 
   @override
   void initState() {
@@ -72,7 +77,7 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
                   ),
                   TextFormField(
                     key: const Key('groupDescription'),
-                    controller: _groupNameFieldController,
+                    controller: _groupDescriptionFieldController,
                     decoration: InputDecoration(
                       labelText: 'Description',
                       hintText: 'Trip to Warsaw',
@@ -113,8 +118,14 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
           text: " Adding group...",
         ),
       );
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
+      await _firestoreService.createGroup(
+        _groupNameFieldController.text,
+        _groupDescriptionFieldController.text,
+        _authService.currentUser!.uid,
+      );
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       Navigator.pushNamedAndRemoveUntil(
         context,
         '/groups',
