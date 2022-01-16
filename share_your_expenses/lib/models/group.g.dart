@@ -12,6 +12,7 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
       description: json['description'] as String,
       members:
           (json['members'] as List<dynamic>).map((e) => e as String).toList(),
+      currency: json['currency'] as String,
     );
 
 Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
@@ -19,4 +20,5 @@ Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'members': instance.members,
+      'currency': instance.currency,
     };

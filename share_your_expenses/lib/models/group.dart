@@ -7,20 +7,16 @@ class Group {
   final String? id;
   final String name;
   final String description;
+  // final Category category;
   final List<String> members;
-
-  // final List<Expense> expenses;
-  //final Currency currency;
-  // final GroupCategory category;
+  final String currency;
 
   const Group({
     this.id,
     required this.name,
     required this.description,
     required this.members,
-    // required this.expenses,
-    // required this.category
-    // required this.currency,
+    required this.currency,
   });
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);

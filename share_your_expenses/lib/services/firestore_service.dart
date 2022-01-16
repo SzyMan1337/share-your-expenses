@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_your_expenses/enums/role.dart';
+import 'package:share_your_expenses/models/expense.dart';
 import 'package:share_your_expenses/models/group.dart';
 import 'package:share_your_expenses/models/user.dart';
 
@@ -25,7 +26,7 @@ class FirestoreService {
         {
           'roles': roles.map((role) => role.name).toList(),
           'userName': userName,
-          'groupsIds': List<String>.empty()
+          'groupsIds': List<String>.empty(),
         },
         SetOptions(merge: true),
       );
@@ -42,18 +43,18 @@ class FirestoreService {
     return User.fromJson(json);
   }
 
-  Future<void> createGroup(
-      String groupName, String description, String userId) async {
+  Future<void> createGroup(String groupName, String description, String userId,
+      String currency) async {
     try {
       List<String> members = [userId];
       final String groupsPath = ApiPath.groups;
 
-      DocumentReference _docRef = await _firebaseFirestore
-          .collection(groupsPath)
-          .add({
+      DocumentReference _docRef =
+          await _firebaseFirestore.collection(groupsPath).add({
         'name': groupName,
         'description': description,
-        'members': members
+        'members': members,
+        'currency': currency,
       });
 
       List<String> groups = [_docRef.id];
@@ -63,6 +64,24 @@ class FirestoreService {
       });
     } catch (e) {
       log('Create Group Error');
+      log(e.toString());
+    }
+  }
+
+  Future<void> createExpense(String expensName, String description,
+      DateTime date, double amount, String userId, String groupId) async {
+    try {
+      final String expensePath = ApiPath.groupExpenses(groupId);
+
+      await _firebaseFirestore.collection(expensePath).add({
+        'name': expensName,
+        'description': description,
+        'amount': amount,
+        'userId': userId,
+        'date': date,
+      });
+    } catch (e) {
+      log('Create Expense Error');
       log(e.toString());
     }
   }
@@ -77,16 +96,70 @@ class FirestoreService {
         return querySnapshot.docs
             .map(
               (QueryDocumentSnapshot snapshot) {
+                if (snapshot.data() != null) {}
                 final Map<String, dynamic> data =
                     snapshot.data() as Map<String, dynamic>;
 
                 data['id'] = snapshot.id;
-
                 return Group.fromJson(data);
               },
             )
             .where((group) => group.members.contains(userId))
             .toList();
+      },
+    );
+  }
+
+  Stream<Group> getGroup(String id) {
+    final String path = ApiPath.group(id);
+    final Stream<DocumentSnapshot> snapshots =
+        _firebaseFirestore.doc(path).snapshots();
+
+    return snapshots.map(
+      (DocumentSnapshot snapshot) {
+        final Map<String, dynamic> data =
+            snapshot.data() as Map<String, dynamic>;
+
+        data['id'] = snapshot.id;
+
+        return Group.fromJson(data);
+      },
+    );
+  }
+
+  Stream<List<Expense>> getGroupExpenses(String groupId) {
+    final String expensesPath = ApiPath.groupExpenses(groupId);
+    final CollectionReference expensesCollection =
+        _firebaseFirestore.collection(expensesPath);
+
+    return expensesCollection.snapshots().map(
+      (QuerySnapshot querySnapshot) {
+        return querySnapshot.docs.map(
+          (QueryDocumentSnapshot snapshot) {
+            if (snapshot.data() != null) {}
+            final Map<String, dynamic> data =
+                snapshot.data() as Map<String, dynamic>;
+
+            data['id'] = snapshot.id;
+            return Expense.fromJson(data);
+          },
+        ).toList();
+      },
+    );
+  }
+
+  Stream<Expense> getExpense(String groupId, String expenseId) {
+    final String path = ApiPath.groupExpense(groupId, expenseId);
+    final Stream<DocumentSnapshot> snapshots =
+        _firebaseFirestore.doc(path).snapshots();
+
+    return snapshots.map(
+      (DocumentSnapshot snapshot) {
+        final Map<String, dynamic> data =
+            snapshot.data() as Map<String, dynamic>;
+        data['id'] = snapshot.id;
+
+        return Expense.fromJson(data);
       },
     );
   }

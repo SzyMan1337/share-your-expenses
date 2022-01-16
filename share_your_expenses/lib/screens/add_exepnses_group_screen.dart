@@ -1,3 +1,4 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/services/auth_service.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
@@ -18,15 +19,19 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
   final formKey = GlobalKey<FormState>();
   final _groupNameFieldController = TextEditingController();
   final _groupDescriptionFieldController = TextEditingController();
+  final _groupCurrencyFieldController = TextEditingController();
 
   final FirestoreService _firestoreService = FirestoreService.instance;
   final AuthService _authService = AuthService.instance;
+
+  Currency? _currency;
 
   @override
   void initState() {
     super.initState();
     _groupNameFieldController.text = 'Group name';
     _groupDescriptionFieldController.text = 'Trip to Warsaw';
+    _groupCurrencyFieldController.text = 'PLN';
   }
 
   @override
@@ -96,6 +101,46 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
                     ),
                     cursorColor: darkBrown,
                   ),
+                  TextFormField(
+                    key: const Key('currency'),
+                    keyboardType: TextInputType.datetime,
+                    controller: _groupCurrencyFieldController,
+                    decoration: InputDecoration(
+                      labelText: 'Currency',
+                      hintText: 'Select currency',
+                      labelStyle: const TextStyle(color: darkBrown),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: darkBrown),
+                      ),
+                      border: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: darkBrown),
+                      ),
+                    ),
+                    validator: Validators.validateGroupCurrency,
+                    onTap: () async {
+                      FocusScope.of(context).requestFocus(FocusNode());
+
+                      showCurrencyPicker(
+                        context: context,
+                        showFlag: true,
+                        showCurrencyName: true,
+                        showCurrencyCode: true,
+                        onSelect: (Currency currency) {
+                          _currency = currency;
+                        },
+                        favorite: ['PLN', 'USD', 'EUR'],
+                      );
+                      _groupCurrencyFieldController.text = (_currency == null
+                          ? 'Select currency'
+                          : _currency!.code);
+                    },
+                    cursorColor: darkBrown,
+                  ),
                 ],
               ),
               CommonButton(
@@ -120,10 +165,10 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
       );
 
       await _firestoreService.createGroup(
-        _groupNameFieldController.text,
-        _groupDescriptionFieldController.text,
-        _authService.currentUser!.uid,
-      );
+          _groupNameFieldController.text,
+          _groupDescriptionFieldController.text,
+          _authService.currentUser!.uid,
+          _groupCurrencyFieldController.text);
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       Navigator.pushNamedAndRemoveUntil(
