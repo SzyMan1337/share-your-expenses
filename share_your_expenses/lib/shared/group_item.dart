@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_your_expenses/enums/category.dart';
 import 'package:share_your_expenses/models/group.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:share_your_expenses/shared/const.dart';
@@ -48,15 +49,16 @@ class GroupItem extends StatelessWidget {
                 newGroup.description,
                 style: Theme.of(context).textTheme.subtitle2,
               ),
-              leading: const Icon(
-                Icons.access_alarm,
+              leading: Icon(
+                group.category != null ? group.category!.iconData : Icons.alarm,
                 size: 40,
-                color: brown,
+                color: Colors.blueGrey,
               ),
               trailing: const Icon(Icons.keyboard_arrow_right),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '/group/expenses', arguments: group.id);
+              Navigator.pushNamed(context, '/group/expenses',
+                  arguments: group.id);
             },
           ),
         );

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:share_your_expenses/enums/category.dart';
 
 part 'group.g.dart';
 
@@ -7,7 +8,7 @@ class Group {
   final String? id;
   final String name;
   final String description;
-  // final Category category;
+  final GroupCategory? category;
   final List<String> members;
   final String currency;
 
@@ -17,6 +18,7 @@ class Group {
     required this.description,
     required this.members,
     required this.currency,
+    this.category,
   });
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);

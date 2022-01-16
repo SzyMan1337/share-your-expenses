@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:share_your_expenses/enums/category.dart';
 import 'package:share_your_expenses/enums/role.dart';
 import 'package:share_your_expenses/models/expense.dart';
 import 'package:share_your_expenses/models/group.dart';
@@ -44,18 +45,21 @@ class FirestoreService {
   }
 
   Future<void> createGroup(String groupName, String description, String userId,
-      String currency) async {
+      String currency, GroupCategory category) async {
     try {
       List<String> members = [userId];
       final String groupsPath = ApiPath.groups;
 
+      Group group = Group(
+        category: category,
+        name: groupName,
+        description: description,
+        members: members,
+        currency: currency,
+      );
+
       DocumentReference _docRef =
-          await _firebaseFirestore.collection(groupsPath).add({
-        'name': groupName,
-        'description': description,
-        'members': members,
-        'currency': currency,
-      });
+          await _firebaseFirestore.collection(groupsPath).add(group.toJson());
 
       List<String> groups = [_docRef.id];
       final String userPath = ApiPath.user(userId);

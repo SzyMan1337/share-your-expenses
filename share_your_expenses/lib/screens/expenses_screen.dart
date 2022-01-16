@@ -22,12 +22,12 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   @override
   void initState() {
     super.initState();
-    _loadItems('I4qbUiRzLfBRnK0R63sE');
   }
 
   @override
   Widget build(BuildContext context) {
     final String groupId = ModalRoute.of(context)!.settings.arguments as String;
+    _loadItems(groupId);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
