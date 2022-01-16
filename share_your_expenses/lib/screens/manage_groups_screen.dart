@@ -28,8 +28,11 @@ class _ManageGroupsScreenState extends State<ManageGroupsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
-      bottomNavigationBar: const MenuBottom(),
+      bottomNavigationBar: const MenuBottom(
+        selected: 0,
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Manage Groups"),

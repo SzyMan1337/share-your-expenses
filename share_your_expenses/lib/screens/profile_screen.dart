@@ -28,7 +28,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 centerTitle: true,
                 title: const Text("Profile"),
               ),
-              bottomNavigationBar: const MenuBottom(),
+              bottomNavigationBar: const MenuBottom(
+                selected: 1,
+              ),
               body: const Center(
                 child: Text('Error!'),
               ));
@@ -39,7 +41,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             centerTitle: true,
             title: const Text("Profile"),
           ),
-          bottomNavigationBar: const MenuBottom(),
+          bottomNavigationBar: const MenuBottom(
+            selected: 1,
+          ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[

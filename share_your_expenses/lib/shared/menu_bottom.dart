@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 class MenuBottom extends StatefulWidget {
   const MenuBottom({
     Key? key,
+    required this.selected,
   }) : super(key: key);
 
+  final int selected;
   @override
   State<MenuBottom> createState() => _MenuBottomState();
 }
 
 class _MenuBottomState extends State<MenuBottom> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -20,9 +20,7 @@ class _MenuBottomState extends State<MenuBottom> {
         unselectedItemColor: Colors.brown.shade300,
         selectedItemColor: Colors.brown.shade800,
         onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          setState(() {});
           switch (index) {
             case 0:
               Navigator.pushNamed(context, '/groups');
@@ -32,7 +30,7 @@ class _MenuBottomState extends State<MenuBottom> {
               break;
           }
         },
-        currentIndex: _selectedIndex,
+        currentIndex: widget.selected,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

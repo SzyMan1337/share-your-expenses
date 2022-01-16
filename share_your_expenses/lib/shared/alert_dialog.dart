@@ -5,7 +5,7 @@ Future<void> showAlertDialog(String message, BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Error!'),
+        title: const Text('Information!'),
         content: Text(message),
       );
     },

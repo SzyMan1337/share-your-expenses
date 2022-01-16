@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:share_your_expenses/enums/category.dart';
 import 'package:share_your_expenses/models/group.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
-import 'package:share_your_expenses/shared/const.dart';
 
 class GroupItem extends StatelessWidget {
   GroupItem({

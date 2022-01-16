@@ -7,6 +7,7 @@ part of 'user.dart';
 // **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
+      id: json['id'] as String?,
       groups:
           (json['groups'] as List<dynamic>).map((e) => e as String).toList(),
       userName: json['userName'] as String,
@@ -16,6 +17,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'id': instance.id,
       'userName': instance.userName,
       'roles': instance.roles.map((e) => _$UserRoleEnumMap[e]).toList(),
       'groups': instance.groups,

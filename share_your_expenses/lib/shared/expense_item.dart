@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/models/expense.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
-import 'package:share_your_expenses/shared/const.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseItem extends StatelessWidget {
   ExpenseItem({
@@ -42,18 +42,31 @@ class ExpenseItem extends StatelessWidget {
           child: GestureDetector(
             child: ListTile(
               contentPadding: const EdgeInsets.all(15),
-              title: Text(
-                newExpense.name,
-                style: Theme.of(context).textTheme.headline5,
+              title: Row(
+                children: [
+                  Text(
+                    newExpense.name,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  const Spacer(),
+                  Text(
+                    newExpense.amount.toStringAsFixed(2),
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ],
               ),
-              subtitle: Text(
-                newExpense.description,
-                style: Theme.of(context).textTheme.subtitle2,
-              ),
-              leading: const Icon(
-                Icons.access_alarm,
-                size: 40,
-                color: brown,
+              subtitle: Row(
+                children: [
+                  Text(
+                    'Paid by me',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  const Spacer(),
+                  Text(
+                    DateFormat("yyyy-MM-dd").format(newExpense.date),
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                ],
               ),
               trailing: const Icon(Icons.keyboard_arrow_right),
             ),

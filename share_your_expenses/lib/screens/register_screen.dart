@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:share_your_expenses/enums/role.dart';
 import 'package:share_your_expenses/services/auth_service.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
+import 'package:share_your_expenses/shared/alert_dialog.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/shared/loading_snackbar.dart';
@@ -149,6 +150,13 @@ class _RegisterSreenState extends State<RegisterSreen> {
           text: " Creating user...",
         ),
       );
+
+      var isAvailable = await _firestoreService
+          .checkIfUsernameAvailable(_usernameFieldController.text);
+      if (!isAvailable) {
+        showAlertDialog(
+            'The account already exists for that username.', context);
+      }
 
       final User? user = await _authService.createUserWithEmailAndPassword(
           email: _emailFieldController.text,

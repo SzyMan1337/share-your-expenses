@@ -54,7 +54,10 @@ class Validators {
       return 'Username can\'t be empty';
     } else if (regx.hasMatch(value)) {
       return 'Username is not valid';
+    } else if (value.length > 20) {
+      return 'Username can\'t be longer that 20';
     }
+
     return null;
   }
 }

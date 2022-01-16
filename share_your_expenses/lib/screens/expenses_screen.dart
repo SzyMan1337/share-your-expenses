@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/models/expense.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
+import 'package:share_your_expenses/shared/add_to_group_dialog.dart';
 import 'package:share_your_expenses/shared/expense_item.dart';
 
 class ExpensesScreen extends StatefulWidget {
@@ -34,13 +35,24 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
         centerTitle: true,
         title: const Text("Flat Expenses"),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(
-              "assets/images/logo.png",
-              semanticLabel: 'logo',
-              fit: BoxFit.fitWidth,
-            ),
+          PopupMenuButton<String>(
+            onSelected: (String value) {
+              switch (value) {
+                case 'Add to group':
+                  showAddToGroupDialog(context, groupId);
+                  break;
+                case 'Cancel':
+                  break;
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return {'Add to group', 'Cancel'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
           ),
         ],
       ),

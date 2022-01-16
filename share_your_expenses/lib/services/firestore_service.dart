@@ -25,9 +25,10 @@ class FirestoreService {
       final DocumentReference document = _firebaseFirestore.doc(path);
       await document.set(
         {
+          'id': userId,
           'roles': roles.map((role) => role.name).toList(),
           'userName': userName,
-          'groupsIds': List<String>.empty(),
+          'groups': List<String>.empty(),
         },
         SetOptions(merge: true),
       );
@@ -42,6 +43,12 @@ class FirestoreService {
     final Map<String, dynamic> json = document.data() as Map<String, dynamic>;
 
     return User.fromJson(json);
+  }
+
+  Future<User?> getUserByUsername(String username) async {
+    final List<User> users = await getUsers();
+    final result = users.where((element) => element.userName == username);
+    return result.isEmpty ? null : result.first;
   }
 
   Future<void> createGroup(String groupName, String description, String userId,
@@ -90,6 +97,25 @@ class FirestoreService {
     }
   }
 
+  Future<void> addUserToGroup(String groupId, String userId) async {
+    try {
+      final String userPath = ApiPath.user(userId);
+      final List<String> groupsToAdd = [groupId];
+      await _firebaseFirestore.doc(userPath).update({
+        'groups': FieldValue.arrayUnion(groupsToAdd),
+      });
+
+      final String groupPath = ApiPath.group(groupId);
+      final List<String> usersToAdd = [userId];
+      await _firebaseFirestore.doc(groupPath).update({
+        'members': FieldValue.arrayUnion(usersToAdd),
+      });
+    } catch (e) {
+      log('Adding user to group error');
+      log(e.toString());
+    }
+  }
+
   Stream<List<Group>> getUserGroups(String userId) {
     final String groupsPath = ApiPath.groups;
     final CollectionReference groupsCollection =
@@ -100,7 +126,6 @@ class FirestoreService {
         return querySnapshot.docs
             .map(
               (QueryDocumentSnapshot snapshot) {
-                if (snapshot.data() != null) {}
                 final Map<String, dynamic> data =
                     snapshot.data() as Map<String, dynamic>;
 
@@ -112,6 +137,22 @@ class FirestoreService {
             .toList();
       },
     );
+  }
+
+  Future<List<User>> getUsers() async {
+    final String path = ApiPath.users;
+    final collectionReference = await _firebaseFirestore.collection(path).get();
+
+    if (collectionReference.docs.isEmpty) return [];
+
+    return collectionReference.docs
+        .map((doc) => User.fromJson(doc.data()))
+        .toList();
+  }
+
+  Future<bool> checkIfUsernameAvailable(String username) async {
+    final List<User> users = await getUsers();
+    return !users.any((element) => element.userName == username);
   }
 
   Stream<Group> getGroup(String id) {
