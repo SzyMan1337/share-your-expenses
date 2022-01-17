@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share_your_expenses/models/firestore_user.dart';
 import 'package:share_your_expenses/services/auth_service.dart';
+import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/menu_bottom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,6 +16,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final AuthService _authService = AuthService.instance;
+  final FirestoreService _firestoreService = FirestoreService.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +64,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              if (user != null && !user.isAnonymous)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Text('Email: ${user.email}'),
-              ),
+              StreamBuilder<FirestoreUser?>(
+                  stream: _firestoreService
+                      .getUserStream(_authService.currentUser!.uid),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<FirestoreUser?> snapshotFire) {
+                    final FirestoreUser? firestoreUser = snapshotFire.data;
+                    if (firestoreUser != null) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child:
+                            Text('${l10n.username}: ${firestoreUser.userName}'),
+                      );
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Text('${l10n.username}: ---'),
+                    );
+                  }),
               if (user != null && !user.isAnonymous)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),

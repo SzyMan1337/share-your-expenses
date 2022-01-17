@@ -23,17 +23,11 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   String currency = '';
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final String groupId = ModalRoute.of(context)!.settings.arguments as String;
     final options = {"0": l10n!.addToGroup, "1": l10n.cancel};
     _loadItems(groupId);
-
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
@@ -69,6 +63,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
             groupId: groupId,
             expense: _expenses[index],
             animation: animation,
+            currency: currency,
           );
         },
       ),
@@ -84,8 +79,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   }
 
   Future<void> _loadItems(String groupId) async {
-    //currency = await _firestoreService.getGroupCurrency(groupId);
-
+    currency = await _firestoreService.getGroupCurrency(groupId) ?? "";
     final List<Expense> expenses =
         await _firestoreService.getGroupExpenses(groupId).first;
 

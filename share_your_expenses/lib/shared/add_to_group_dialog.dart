@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share_your_expenses/models/user.dart';
+import 'package:share_your_expenses/models/firestore_user.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:share_your_expenses/shared/alert_dialog.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
@@ -63,7 +63,7 @@ Future<void> showAddToGroupDialog(BuildContext context, String groupId) async {
                     ),
                   );
 
-                  User? user = await _firestoreService
+                  FirestoreUser? user = await _firestoreService
                       .getUserByUsername(_usernameToAddFieldController.text);
 
                   if (user == null) {

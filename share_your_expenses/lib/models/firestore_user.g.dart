@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'firestore_user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map<String, dynamic> json) => User(
+FirestoreUser _$FirestoreUserFromJson(Map<String, dynamic> json) =>
+    FirestoreUser(
       id: json['id'] as String,
       groups:
           (json['groups'] as List<dynamic>).map((e) => e as String).toList(),
@@ -16,7 +17,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           .toList(),
     );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$FirestoreUserToJson(FirestoreUser instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'userName': instance.userName,
       'roles': instance.roles.map((e) => _$UserRoleEnumMap[e]).toList(),

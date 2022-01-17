@@ -2,28 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:share_your_expenses/models/expense.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ExpenseItem extends StatelessWidget {
-  ExpenseItem({
+class ExpenseItem extends StatefulWidget {
+  const ExpenseItem({
     Key? key,
     required this.animation,
     required this.expense,
     required this.groupId,
+    required this.currency,
   }) : super(key: key);
-
-  final FirestoreService _firestoreService = FirestoreService.instance;
 
   final Expense expense;
   final String groupId;
+  final String currency;
   final Animation<double> animation;
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<Expense>(
-      stream: _firestoreService.getExpense(groupId, expense.id!),
-      builder: (context, AsyncSnapshot<Expense> snapshot) {
-        Expense newExpense = expense;
+  State<ExpenseItem> createState() => _ExpenseItemState();
+}
 
+class _ExpenseItemState extends State<ExpenseItem> {
+  final FirestoreService _firestoreService = FirestoreService.instance;
+
+  String userName = '';
+
+  @override
+  void initState() {
+    _loadUSername(widget.expense.userId);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return StreamBuilder<Expense>(
+      stream: _firestoreService.getExpense(widget.groupId, widget.expense.id!),
+      builder: (context, AsyncSnapshot<Expense> snapshot) {
+        Expense newExpense = widget.expense;
         if (snapshot.hasData) {
           newExpense = snapshot.data!;
         }
@@ -34,7 +50,7 @@ class ExpenseItem extends StatelessWidget {
             end: const Offset(0, 0),
           ).animate(
             CurvedAnimation(
-              parent: animation,
+              parent: widget.animation,
               curve: Curves.bounceIn,
               reverseCurve: Curves.bounceOut,
             ),
@@ -50,7 +66,9 @@ class ExpenseItem extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    newExpense.amount.toStringAsFixed(2),
+                    newExpense.amount.toStringAsFixed(2) +
+                        " " +
+                        widget.currency,
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ],
@@ -58,7 +76,7 @@ class ExpenseItem extends StatelessWidget {
               subtitle: Row(
                 children: [
                   Text(
-                    'Paid by me',
+                    l10n!.paidBy + userName,
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                   const Spacer(),
@@ -77,5 +95,13 @@ class ExpenseItem extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> _loadUSername(String userId) async {
+    final name = (await _firestoreService.getUser(userId)).userName;
+    //WidgetsBinding.instance?.addPostFrameCallback((_) => setState(...));
+    setState(() {
+      userName = name;
+    });
   }
 }

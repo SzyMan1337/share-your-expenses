@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_your_expenses/enums/category.dart';
 import 'package:share_your_expenses/enums/role.dart';
 import 'package:share_your_expenses/models/expense.dart';
+import 'package:share_your_expenses/models/firestore_user.dart';
 import 'package:share_your_expenses/models/group.dart';
-import 'package:share_your_expenses/models/user.dart';
 
 import '../api_path.dart';
 
@@ -37,16 +37,16 @@ class FirestoreService {
     }
   }
 
-  Future<User> getUser(String userId) async {
+  Future<FirestoreUser> getUser(String userId) async {
     final String path = ApiPath.user(userId);
     final DocumentSnapshot document = await _firebaseFirestore.doc(path).get();
     final Map<String, dynamic> json = document.data() as Map<String, dynamic>;
 
-    return User.fromJson(json);
+    return FirestoreUser.fromJson(json);
   }
 
-  Future<User?> getUserByUsername(String username) async {
-    final List<User> users = await getUsers();
+  Future<FirestoreUser?> getUserByUsername(String username) async {
+    final List<FirestoreUser> users = await getUsers();
     final result = users.where((element) => element.userName == username);
     return result.isEmpty ? null : result.first;
   }
@@ -139,19 +139,19 @@ class FirestoreService {
     );
   }
 
-  Future<List<User>> getUsers() async {
+  Future<List<FirestoreUser>> getUsers() async {
     final String path = ApiPath.users;
     final collectionReference = await _firebaseFirestore.collection(path).get();
 
     if (collectionReference.docs.isEmpty) return [];
 
     return collectionReference.docs
-        .map((doc) => User.fromJson(doc.data()))
+        .map((doc) => FirestoreUser.fromJson(doc.data()))
         .toList();
   }
 
   Future<bool> checkIfUsernameAvailable(String username) async {
-    final List<User> users = await getUsers();
+    final List<FirestoreUser> users = await getUsers();
     return !users.any((element) => element.userName == username);
   }
 
@@ -207,5 +207,27 @@ class FirestoreService {
         return Expense.fromJson(data);
       },
     );
+  }
+
+  Stream<FirestoreUser> getUserStream(String userId) {
+    final String path = ApiPath.user(userId);
+    final Stream<DocumentSnapshot> snapshots =
+        _firebaseFirestore.doc(path).snapshots();
+
+    return snapshots.map(
+      (DocumentSnapshot snapshot) {
+        final Map<String, dynamic> data =
+            snapshot.data() as Map<String, dynamic>;
+        return FirestoreUser.fromJson(data);
+      },
+    );
+  }
+
+  Future<String?> getGroupCurrency(String groupId) async {
+    final String path = ApiPath.group(groupId);
+    final DocumentSnapshot document = await _firebaseFirestore.doc(path).get();
+    final Map<String, dynamic> json = document.data() as Map<String, dynamic>;
+
+    return Group.fromJson(json).currency;
   }
 }
