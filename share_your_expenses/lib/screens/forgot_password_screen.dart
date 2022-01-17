@@ -67,7 +67,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 validator: validators.validateEmail,
               ),
               CommonButton(
-                onPressed: _onSubmitLoginButton(l10n),
+                onPressed: () {
+                  _onSubmitLoginButton(l10n);
+                },
                 text: l10n.submit,
               ),
             ],
@@ -78,6 +80,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   bool _isFormValidated() {
+    if (formKey.currentState == null) return false;
     final FormState form = formKey.currentState!;
     return form.validate();
   }

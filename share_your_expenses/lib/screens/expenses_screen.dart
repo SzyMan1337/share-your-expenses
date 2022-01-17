@@ -31,7 +31,9 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final String groupId = ModalRoute.of(context)!.settings.arguments as String;
+    final options = {"0": l10n!.addToGroup, "1": l10n.cancel};
     _loadItems(groupId);
+
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
@@ -41,18 +43,18 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
           PopupMenuButton<String>(
             onSelected: (String value) {
               switch (value) {
-                case 'Add to group':
+                case "0":
                   showAddToGroupDialog(context, groupId);
                   break;
-                case 'Cancel':
+                case "1":
                   break;
               }
             },
             itemBuilder: (BuildContext context) {
-              return {'Add to group', 'Cancel'}.map((String choice) {
+              return options.keys.map((key) {
                 return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
+                  value: key,
+                  child: Text(options[key]!),
                 );
               }).toList();
             },

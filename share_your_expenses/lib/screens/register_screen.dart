@@ -36,9 +36,6 @@ class _RegisterSreenState extends State<RegisterSreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final validators = Validators(l10n!);
-    _emailFieldController.text = 'example@email.com';
-    _passwordFieldController.text = l10n.password;
-    _usernameFieldController.text = 'Bob123';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

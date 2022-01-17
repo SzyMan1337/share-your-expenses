@@ -40,10 +40,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     final l10n = AppLocalizations.of(context);
     final validators = Validators(l10n!);
 
-    _expenseNameFieldController.text = l10n.name;
-    _expenseDescriptionFieldController.text = l10n.planeTickets;
-    _expenseAmountFieldController.text = '0.00';
-    _expenseDateFieldController.text = DateFormat("yyyy-MM-dd").format(_date!);
     final String groupId = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(

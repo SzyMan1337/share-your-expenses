@@ -38,9 +38,6 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final validators = Validators(l10n!);
-    _groupNameFieldController.text = l10n.groupName;
-    _groupDescriptionFieldController.text = l10n.tripToWarsaw;
-    _groupCurrencyFieldController.text = 'PLN';
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
