@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/screens/add_exepnses_group_screen.dart';
 import 'package:share_your_expenses/screens/add_expense_screen.dart';
+import 'package:share_your_expenses/screens/expense_details_screen.dart';
 import 'package:share_your_expenses/screens/expenses_screen.dart';
 import 'package:share_your_expenses/screens/forgot_password_screen.dart';
 import 'package:share_your_expenses/screens/home_screen.dart';
@@ -35,6 +36,7 @@ class ShareExpensesApp extends StatelessWidget {
         '/group/expenses': (context) => const ExpensesScreen(
               groupId: '',
             ),
+        '/group/expenses/detail': (context) => const ExpenseDetailsScreen()
       },
       theme: ThemeData(primarySwatch: Colors.blueGrey),
     );

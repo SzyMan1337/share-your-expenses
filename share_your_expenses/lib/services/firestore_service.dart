@@ -223,11 +223,11 @@ class FirestoreService {
     );
   }
 
-  Future<String?> getGroupCurrency(String groupId) async {
+  Future<Group> getGroupAsync(String groupId) async {
     final String path = ApiPath.group(groupId);
     final DocumentSnapshot document = await _firebaseFirestore.doc(path).get();
     final Map<String, dynamic> json = document.data() as Map<String, dynamic>;
 
-    return Group.fromJson(json).currency;
+    return Group.fromJson(json);
   }
 }

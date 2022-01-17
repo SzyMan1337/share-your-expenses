@@ -21,6 +21,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   final FirestoreService _firestoreService = FirestoreService.instance;
   final List<Expense> _expenses = [];
   String currency = '';
+  String groupName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
         centerTitle: true,
-        title: const Text("Flat Expenses"),
+        title: Text(groupName),
         actions: [
           PopupMenuButton<String>(
             onSelected: (String value) {
@@ -79,7 +80,13 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   }
 
   Future<void> _loadItems(String groupId) async {
-    currency = await _firestoreService.getGroupCurrency(groupId) ?? "";
+    final group = await _firestoreService.getGroupAsync(groupId);
+    if (mounted) {
+      setState(() {
+        currency = group.currency;
+        groupName = group.name;
+      });
+    }
     final List<Expense> expenses =
         await _firestoreService.getGroupExpenses(groupId).first;
 

@@ -99,9 +99,10 @@ class _ExpenseItemState extends State<ExpenseItem> {
 
   Future<void> _loadUSername(String userId) async {
     final name = (await _firestoreService.getUser(userId)).userName;
-    //WidgetsBinding.instance?.addPostFrameCallback((_) => setState(...));
-    setState(() {
-      userName = name;
-    });
+    if (mounted) {
+      setState(() {
+        userName = name;
+      });
+    }
   }
 }
