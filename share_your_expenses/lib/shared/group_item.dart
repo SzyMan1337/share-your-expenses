@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/enums/category.dart';
 import 'package:share_your_expenses/models/group.dart';
+import 'package:share_your_expenses/screens/expenses_screen.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
 
 class GroupItem extends StatelessWidget {
@@ -56,8 +57,12 @@ class GroupItem extends StatelessWidget {
               trailing: const Icon(Icons.keyboard_arrow_right),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '/group/expenses',
-                  arguments: group.id);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ExpensesScreen(
+                            groupId: group.id!,
+                          )));
             },
           ),
         );

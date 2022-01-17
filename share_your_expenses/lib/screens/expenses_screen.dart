@@ -24,11 +24,16 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   String groupName = '';
 
   @override
+  void initState() {
+    super.initState();
+    _loadItems(widget.groupId);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final String groupId = ModalRoute.of(context)!.settings.arguments as String;
     final options = {"0": l10n!.addToGroup, "1": l10n.cancel};
-    _loadItems(groupId);
+
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
@@ -39,7 +44,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
             onSelected: (String value) {
               switch (value) {
                 case "0":
-                  showAddToGroupDialog(context, groupId);
+                  showAddToGroupDialog(context, widget.groupId);
                   break;
                 case "1":
                   break;
@@ -61,7 +66,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
         initialItemCount: _expenses.length,
         itemBuilder: (context, index, Animation<double> animation) {
           return ExpenseItem(
-            groupId: groupId,
+            groupId: widget.groupId,
             expense: _expenses[index],
             animation: animation,
             currency: currency,
@@ -71,7 +76,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, '/add-expense', arguments: groupId);
+          Navigator.pushNamed(context, '/add-expense',
+              arguments: widget.groupId);
         },
         backgroundColor: Colors.blueGrey,
       ),

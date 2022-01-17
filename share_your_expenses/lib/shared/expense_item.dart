@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/models/expense.dart';
+import 'package:share_your_expenses/models/expense_details_arguments.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -89,7 +90,14 @@ class _ExpenseItemState extends State<ExpenseItem> {
               trailing: const Icon(Icons.keyboard_arrow_right),
             ),
             onTap: () {
-              //Navigator.pushNamed(context, '/expense', arguments: expense.id);
+              Navigator.pushNamed(
+                context,
+                '/group/expenses/detail',
+                arguments: ExpenseDetailsArguments(
+                  widget.groupId,
+                  widget.expense.id!,
+                ),
+              );
             },
           ),
         );
