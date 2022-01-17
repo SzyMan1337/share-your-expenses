@@ -47,5 +47,10 @@
 	<string>Permission to access photo gallery</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Permission to access camera</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>pl</string>
+	</array>
 </dict>
 </plist>

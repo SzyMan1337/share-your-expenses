@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/utils/validators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginInputs extends StatelessWidget {
   const LoginInputs({
@@ -14,6 +15,8 @@ class LoginInputs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final validators = Validators(l10n!);
     return Column(
       children: <Widget>[
         TextFormField(
@@ -36,7 +39,7 @@ class LoginInputs extends StatelessWidget {
             ),
           ),
           cursorColor: darkBrown,
-          validator: Validators.validateEmail,
+          validator: validators.validateEmail,
         ),
         const SizedBox(height: 30),
         TextFormField(
@@ -45,8 +48,8 @@ class LoginInputs extends StatelessWidget {
           autocorrect: false,
           obscureText: true,
           decoration: InputDecoration(
-            hintText: 'securepassword',
-            labelText: 'Password',
+            hintText: l10n.securepassword,
+            labelText: l10n.password,
             labelStyle: const TextStyle(color: darkBrown),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey.shade400),
@@ -59,7 +62,7 @@ class LoginInputs extends StatelessWidget {
             ),
           ),
           cursorColor: darkBrown,
-          validator: Validators.validatePassword,
+          validator: validators.validatePassword,
         ),
         const SizedBox(height: 10),
       ],

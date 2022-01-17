@@ -6,6 +6,7 @@ import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/utils/validators.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({
@@ -32,14 +33,17 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   @override
   void initState() {
     super.initState();
-    _expenseNameFieldController.text = 'Name';
-    _expenseDescriptionFieldController.text = 'Plane tickets';
-    _expenseAmountFieldController.text = '0.00';
-    _expenseDateFieldController.text = DateFormat("yyyy-MM-dd").format(_date!);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final validators = Validators(l10n!);
+
+    _expenseNameFieldController.text = l10n.name;
+    _expenseDescriptionFieldController.text = l10n.planeTickets;
+    _expenseAmountFieldController.text = '0.00';
+    _expenseDateFieldController.text = DateFormat("yyyy-MM-dd").format(_date!);
     final String groupId = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +56,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           },
         ),
         centerTitle: true,
-        title: const Text("New Expense"),
+        title: Text(l10n.newExpense),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -67,8 +71,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     key: const Key('expenseTitle'),
                     controller: _expenseNameFieldController,
                     decoration: InputDecoration(
-                      labelText: 'Expense Title',
-                      hintText: 'Title',
+                      labelText: l10n.expenseTitle,
+                      hintText: l10n.title,
                       labelStyle: const TextStyle(color: darkBrown),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -83,14 +87,14 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       ),
                     ),
                     cursorColor: darkBrown,
-                    validator: Validators.validateExpenseName,
+                    validator: validators.validateExpenseName,
                   ),
                   TextFormField(
                     key: const Key('expenseDescription'),
                     controller: _expenseDescriptionFieldController,
                     decoration: InputDecoration(
-                      labelText: 'Description',
-                      hintText: 'Plane tickets',
+                      labelText: l10n.description,
+                      hintText: l10n.planeTickets,
                       labelStyle: const TextStyle(color: darkBrown),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -111,8 +115,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     keyboardType: TextInputType.number,
                     controller: _expenseAmountFieldController,
                     decoration: InputDecoration(
-                      labelText: 'Amount',
-                      hintText: 'Input amount',
+                      labelText: l10n.amount,
+                      hintText: l10n.inputAmount,
                       labelStyle: const TextStyle(color: darkBrown),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -127,15 +131,15 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       ),
                     ),
                     cursorColor: darkBrown,
-                    validator: Validators.validateExpenseAmount,
+                    validator: validators.validateExpenseAmount,
                   ),
                   TextFormField(
                     key: const Key('date'),
                     keyboardType: TextInputType.datetime,
                     controller: _expenseDateFieldController,
                     decoration: InputDecoration(
-                      labelText: 'Date',
-                      hintText: 'Select date',
+                      labelText: l10n.date,
+                      hintText: l10n.selectDate,
                       labelStyle: const TextStyle(color: darkBrown),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -149,7 +153,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         borderSide: BorderSide(color: darkBrown),
                       ),
                     ),
-                    validator: Validators.validateExpenseDate,
+                    validator: validators.validateExpenseDate,
                     onTap: () async {
                       FocusScope.of(context).requestFocus(FocusNode());
 
@@ -161,7 +165,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       );
 
                       _expenseDateFieldController.text = (_date == null
-                          ? 'Select date'
+                          ? l10n.selectDate
                           : DateFormat("yyyy-MM-dd").format(_date!));
                     },
                     cursorColor: darkBrown,
@@ -170,9 +174,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               ),
               CommonButton(
                 onPressed: () {
-                  _onSubmitSaveButton(groupId);
+                  _onSubmitSaveButton(groupId, l10n);
                 },
-                text: 'Save',
+                text: l10n.save,
               ),
             ],
           ),
@@ -181,11 +185,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     );
   }
 
-  _onSubmitSaveButton(String groupId) async {
+  _onSubmitSaveButton(String groupId, AppLocalizations l10n) async {
     if (_isFormValidated()) {
       ScaffoldMessenger.of(context).showSnackBar(
         loadingSnackBar(
-          text: " Adding new expense...",
+          text: l10n.addingNewExpense,
         ),
       );
 

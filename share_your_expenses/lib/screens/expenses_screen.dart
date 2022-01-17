@@ -3,6 +3,7 @@ import 'package:share_your_expenses/models/expense.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:share_your_expenses/shared/add_to_group_dialog.dart';
 import 'package:share_your_expenses/shared/expense_item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExpensesScreen extends StatefulWidget {
   const ExpensesScreen({
@@ -19,6 +20,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   final FirestoreService _firestoreService = FirestoreService.instance;
   final List<Expense> _expenses = [];
+  String currency = '';
 
   @override
   void initState() {
@@ -27,6 +29,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final String groupId = ModalRoute.of(context)!.settings.arguments as String;
     _loadItems(groupId);
     return Scaffold(
@@ -79,6 +82,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   }
 
   Future<void> _loadItems(String groupId) async {
+    //currency = await _firestoreService.getGroupCurrency(groupId);
+
     final List<Expense> expenses =
         await _firestoreService.getGroupExpenses(groupId).first;
 

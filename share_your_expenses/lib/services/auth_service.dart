@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:share_your_expenses/shared/alert_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -20,6 +21,7 @@ class AuthService {
     required String password,
     required BuildContext context,
   }) async {
+    final l10n = AppLocalizations.of(context);
     try {
       final UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(
@@ -28,11 +30,11 @@ class AuthService {
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        showAlertDialog('No user found for that email.', context);
+        showAlertDialog(l10n!.userNotFoundEmail, context);
       } else if (e.code == 'wrong-password') {
-        showAlertDialog('Wrong password provided for that user.', context);
+        showAlertDialog(l10n!.wrongPassword, context);
       } else {
-        showAlertDialog(e.message ?? 'SignIn failed', context);
+        showAlertDialog(e.message ?? l10n!.signInFailed, context);
       }
     } catch (e) {
       showAlertDialog(e.toString(), context);
@@ -44,6 +46,7 @@ class AuthService {
     required String password,
     required BuildContext context,
   }) async {
+    final l10n = AppLocalizations.of(context);
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -53,17 +56,17 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showAlertDialog(
-          'The password provided is too weak.',
+          l10n!.weakPassword,
           context,
         );
       } else if (e.code == 'email-already-in-use') {
         showAlertDialog(
-          'The account already exists for that email.',
+          l10n!.accountExistsEmail,
           context,
         );
       } else {
         showAlertDialog(
-          e.message ?? 'SignUp failed',
+          e.message ?? l10n!.signUpFailed,
           context,
         );
       }

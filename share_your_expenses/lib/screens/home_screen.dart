@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = 'homeScreen';
@@ -14,10 +15,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final loginScaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Welcome"),
+        title: Text(l10n!.welcome),
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -43,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Text(
-              "Share your expenses now!",
+              l10n.shareYourExpenses,
               style: Theme.of(context).textTheme.headline2,
               textAlign: TextAlign.center,
             ),
@@ -57,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       '/register',
                     );
                   },
-                  text: 'Register',
+                  text: l10n.register,
                   highlighColor: true,
                 ),
                 const SizedBox(
@@ -70,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       '/login',
                     );
                   },
-                  text: 'Log In',
+                  text: l10n.login,
                 ),
               ],
             ),

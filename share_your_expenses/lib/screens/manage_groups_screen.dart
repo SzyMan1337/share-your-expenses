@@ -4,6 +4,7 @@ import 'package:share_your_expenses/services/auth_service.dart';
 import 'package:share_your_expenses/services/firestore_service.dart';
 import 'package:share_your_expenses/shared/group_item.dart';
 import 'package:share_your_expenses/shared/menu_bottom.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ManageGroupsScreen extends StatefulWidget {
   const ManageGroupsScreen({Key? key}) : super(key: key);
@@ -28,14 +29,14 @@ class _ManageGroupsScreenState extends State<ManageGroupsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       bottomNavigationBar: const MenuBottom(
         selected: 0,
       ),
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Manage Groups"),
+        title: Text(l10n!.manageGroups),
       ),
       body: AnimatedList(
         key: listKey,

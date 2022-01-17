@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:share_your_expenses/services/auth_service.dart';
 import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/menu_bottom.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return StreamBuilder<User?>(
       stream: _authService.authStateChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
@@ -26,20 +28,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: const Text("Profile"),
+                title: Text(l10n!.profile),
               ),
               bottomNavigationBar: const MenuBottom(
                 selected: 1,
               ),
-              body: const Center(
-                child: Text('Error!'),
+              body: Center(
+                child: Text(l10n.error),
               ));
         }
         final User? user = snapshot.data;
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: const Text("Profile"),
+            title: Text(l10n!.profile),
           ),
           bottomNavigationBar: const MenuBottom(
             selected: 1,
@@ -59,11 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              if (user != null && user.isAnonymous)
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Text('You are logged in annonymously!'),
-                ),
               if (user != null && !user.isAnonymous)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -71,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               if (user != null && !user.emailVerified && !user.isAnonymous)
                 CommonButton(
-                  text: 'Verify Your Email',
+                  text: l10n.verifyEmail,
                   onPressed: () {
                     user.sendEmailVerification();
                   },
@@ -84,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/home', (route) => false);
                   },
-                  text: 'Logout',
+                  text: l10n.logout,
                 ),
               ),
             ],

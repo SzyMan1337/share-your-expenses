@@ -4,6 +4,7 @@ import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/utils/validators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -20,17 +21,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final validators = Validators(l10n!);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Forgot Password"),
-        actions: [
-          Image.asset(
-            "assets/images/logo.png",
-            semanticLabel: 'logo',
-            fit: BoxFit.fitWidth,
-          ),
-        ],
+        centerTitle: true,
+        title: Text(l10n.forgotPassword),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -51,7 +48,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 key: const Key('email'),
                 controller: _emailFieldController,
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: l10n.username,
                   hintText: 'example@email.com',
                   labelStyle: const TextStyle(color: darkBrown),
                   enabledBorder: UnderlineInputBorder(
@@ -67,11 +64,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 ),
                 cursorColor: darkBrown,
-                validator: Validators.validateEmail,
+                validator: validators.validateEmail,
               ),
               CommonButton(
-                onPressed: _onSubmitLoginButton,
-                text: 'Submit',
+                onPressed: _onSubmitLoginButton(l10n),
+                text: l10n.submit,
               ),
             ],
           ),
@@ -85,11 +82,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return form.validate();
   }
 
-  _onSubmitLoginButton() async {
+  _onSubmitLoginButton(AppLocalizations l10n) async {
     if (_isFormValidated()) {
       ScaffoldMessenger.of(context).showSnackBar(
         loadingSnackBar(
-          text: " Wait please...",
+          text: l10n.waitPlease,
         ),
       );
 
@@ -99,9 +96,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      const snackBar = SnackBar(
+      final snackBar = SnackBar(
         backgroundColor: Colors.red,
-        content: Text('Please check your email!'),
+        content: Text(l10n.checkYourEmail),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

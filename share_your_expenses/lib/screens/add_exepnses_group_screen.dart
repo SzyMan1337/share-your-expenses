@@ -7,6 +7,7 @@ import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/utils/validators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddExepensesGroupScreen extends StatefulWidget {
   const AddExepensesGroupScreen({Key? key}) : super(key: key);
@@ -31,13 +32,15 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
   @override
   void initState() {
     super.initState();
-    _groupNameFieldController.text = 'Group name';
-    _groupDescriptionFieldController.text = 'Trip to Warsaw';
-    _groupCurrencyFieldController.text = 'PLN';
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final validators = Validators(l10n!);
+    _groupNameFieldController.text = l10n.groupName;
+    _groupDescriptionFieldController.text = l10n.tripToWarsaw;
+    _groupCurrencyFieldController.text = 'PLN';
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -49,7 +52,7 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
           },
         ),
         centerTitle: true,
-        title: const Text("New Expenses Group"),
+        title: Text(l10n.newGroup),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -64,8 +67,8 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
                     key: const Key('groutpTitle'),
                     controller: _groupNameFieldController,
                     decoration: InputDecoration(
-                      labelText: 'Group Title',
-                      hintText: 'Group name',
+                      labelText: l10n.groupTitle,
+                      hintText: l10n.name,
                       labelStyle: const TextStyle(color: darkBrown),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -80,14 +83,14 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
                       ),
                     ),
                     cursorColor: darkBrown,
-                    validator: Validators.validateGroupName,
+                    validator: validators.validateGroupName,
                   ),
                   TextFormField(
                     key: const Key('groupDescription'),
                     controller: _groupDescriptionFieldController,
                     decoration: InputDecoration(
-                      labelText: 'Description',
-                      hintText: 'Trip to Warsaw',
+                      labelText: l10n.description,
+                      hintText: l10n.tripToWarsaw,
                       labelStyle: const TextStyle(color: darkBrown),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -108,8 +111,8 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
                     keyboardType: TextInputType.datetime,
                     controller: _groupCurrencyFieldController,
                     decoration: InputDecoration(
-                      labelText: 'Currency',
-                      hintText: 'Select currency',
+                      labelText: l10n.currency,
+                      hintText: l10n.selectCurrency,
                       labelStyle: const TextStyle(color: darkBrown),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -123,7 +126,7 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
                         borderSide: BorderSide(color: darkBrown),
                       ),
                     ),
-                    validator: Validators.validateGroupCurrency,
+                    validator: validators.validateGroupCurrency,
                     onTap: () async {
                       FocusScope.of(context).requestFocus(FocusNode());
 
@@ -137,7 +140,7 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
                           setState(() {
                             _groupCurrencyFieldController.text =
                                 (_currency == null
-                                    ? 'Select currency'
+                                    ? l10n.selectCurrency
                                     : _currency!.code);
                           });
                         },
@@ -147,11 +150,11 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
                     cursorColor: darkBrown,
                   ),
                   const SizedBox(height: 15),
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Category",
-                      style: TextStyle(
+                      l10n.category,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: darkBrown,
                       ),
@@ -214,9 +217,9 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
               ),
               CommonButton(
                 onPressed: () {
-                  _onSubmitSaveButton();
+                  _onSubmitSaveButton(l10n);
                 },
-                text: 'Save',
+                text: l10n.save,
               ),
             ],
           ),
@@ -225,11 +228,11 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
     );
   }
 
-  _onSubmitSaveButton() async {
+  _onSubmitSaveButton(AppLocalizations l10n) async {
     if (_isFormValidated()) {
       ScaffoldMessenger.of(context).showSnackBar(
         loadingSnackBar(
-          text: " Adding group...",
+          text: l10n.addingGroup,
         ),
       );
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuBottom extends StatefulWidget {
   const MenuBottom({
@@ -14,6 +15,7 @@ class MenuBottom extends StatefulWidget {
 class _MenuBottomState extends State<MenuBottom> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return BottomNavigationBar(
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
@@ -31,14 +33,14 @@ class _MenuBottomState extends State<MenuBottom> {
           }
         },
         currentIndex: widget.selected,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Groups',
+            icon: const Icon(Icons.home),
+            label: l10n!.groups,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Profile",
+            icon: const Icon(Icons.person),
+            label: l10n.profile,
           ),
         ]);
   }

@@ -5,13 +5,13 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
-  final String? id;
+  final String id;
   final String userName;
   final List<UserRole> roles;
   final List<String> groups;
 
   const User({
-    this.id,
+    required this.id,
     required this.groups,
     required this.userName,
     required this.roles,

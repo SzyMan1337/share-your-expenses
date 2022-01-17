@@ -9,6 +9,7 @@ import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/shared/login_inputs.dart';
 import 'package:share_your_expenses/utils/validators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterSreen extends StatefulWidget {
   const RegisterSreen({Key? key}) : super(key: key);
@@ -29,13 +30,15 @@ class _RegisterSreenState extends State<RegisterSreen> {
   @override
   void initState() {
     super.initState();
-    _emailFieldController.text = 'example@email.com';
-    _passwordFieldController.text = 'password';
-    _usernameFieldController.text = 'Bob123';
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final validators = Validators(l10n!);
+    _emailFieldController.text = 'example@email.com';
+    _passwordFieldController.text = l10n.password;
+    _usernameFieldController.text = 'Bob123';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -48,7 +51,7 @@ class _RegisterSreenState extends State<RegisterSreen> {
           },
         ),
         centerTitle: true,
-        title: const Text("Register"),
+        title: Text(l10n.register),
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -79,7 +82,7 @@ class _RegisterSreenState extends State<RegisterSreen> {
                 key: const Key('username'),
                 controller: _usernameFieldController,
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: l10n.username,
                   hintText: 'Bob123',
                   labelStyle: const TextStyle(color: darkBrown),
                   enabledBorder: UnderlineInputBorder(
@@ -95,7 +98,7 @@ class _RegisterSreenState extends State<RegisterSreen> {
                   ),
                 ),
                 cursorColor: darkBrown,
-                validator: Validators.validateUserName,
+                validator: validators.validateUserName,
               ),
               LoginInputs(
                 emailFieldController: _emailFieldController,
@@ -103,15 +106,15 @@ class _RegisterSreenState extends State<RegisterSreen> {
               ),
               CommonButton(
                 onPressed: () {
-                  _onSubmitRegisterButton(context);
+                  _onSubmitRegisterButton(context, l10n);
                 },
-                text: 'Register',
+                text: l10n.register,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Have an account? ",
+                    l10n.haveAccount,
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
                   TextButton(
@@ -121,9 +124,9 @@ class _RegisterSreenState extends State<RegisterSreen> {
                         '/login',
                       );
                     },
-                    child: const Text(
-                      " Sign In",
-                      style: TextStyle(
+                    child: Text(
+                      l10n.signIn,
+                      style: const TextStyle(
                         color: darkBrown,
                         fontWeight: FontWeight.w500,
                       ),
@@ -143,19 +146,18 @@ class _RegisterSreenState extends State<RegisterSreen> {
     return form.validate();
   }
 
-  _onSubmitRegisterButton(context) async {
+  _onSubmitRegisterButton(context, AppLocalizations l10n) async {
     if (_isFormValidated()) {
       ScaffoldMessenger.of(context).showSnackBar(
         loadingSnackBar(
-          text: " Creating user...",
+          text: l10n.creatingUser,
         ),
       );
 
       var isAvailable = await _firestoreService
           .checkIfUsernameAvailable(_usernameFieldController.text);
       if (!isAvailable) {
-        showAlertDialog(
-            'The account already exists for that username.', context);
+        showAlertDialog(l10n.accountExistsEmail, context);
       }
 
       final User? user = await _authService.createUserWithEmailAndPassword(

@@ -7,7 +7,7 @@ part of 'user.dart';
 // **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
-      id: json['id'] as String?,
+      id: json['id'] as String,
       groups:
           (json['groups'] as List<dynamic>).map((e) => e as String).toList(),
       userName: json['userName'] as String,

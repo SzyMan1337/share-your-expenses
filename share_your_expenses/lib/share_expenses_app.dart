@@ -9,6 +9,7 @@ import 'package:share_your_expenses/screens/login_screen.dart';
 import 'package:share_your_expenses/screens/manage_groups_screen.dart';
 import 'package:share_your_expenses/screens/profile_screen.dart';
 import 'package:share_your_expenses/screens/register_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShareExpensesApp extends StatelessWidget {
   const ShareExpensesApp({Key? key}) : super(key: key);
@@ -17,6 +18,8 @@ class ShareExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       themeMode: ThemeMode.system,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       routes: {
         '/': (context) => const LoadingScreen(),
         '/login': (context) => const LoginScreen(),

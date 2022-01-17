@@ -5,6 +5,7 @@ import 'package:share_your_expenses/shared/common_button.dart';
 import 'package:share_your_expenses/shared/const.dart';
 import 'package:share_your_expenses/shared/loading_snackbar.dart';
 import 'package:share_your_expenses/shared/login_inputs.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -28,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -40,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
           },
         ),
         centerTitle: true,
-        title: const Text("Login"),
+        title: Text(l10n!.login),
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -81,9 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         '/forgot-password',
                       );
                     },
-                    child: const Text(
-                      "Forgot password?",
-                      style: TextStyle(
+                    child: Text(
+                      l10n.forgotPassword,
+                      style: const TextStyle(
                         color: darkBrown,
                         fontWeight: FontWeight.w500,
                       ),
@@ -93,15 +96,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               CommonButton(
                 onPressed: () {
-                  _onSubmitLoginButton();
+                  _onSubmitLoginButton(l10n);
                 },
-                text: 'login',
+                text: l10n.login,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Don't have an account? ",
+                    l10n.noAccountQuestion,
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
                   TextButton(
@@ -111,9 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         '/register',
                       );
                     },
-                    child: const Text(
-                      " Register",
-                      style: TextStyle(
+                    child: Text(
+                      l10n.register,
+                      style: const TextStyle(
                         color: darkBrown,
                         fontWeight: FontWeight.w500,
                       ),
@@ -133,11 +136,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return form.validate();
   }
 
-  _onSubmitLoginButton() async {
+  _onSubmitLoginButton(AppLocalizations l10n) async {
     if (_isFormValidated()) {
       ScaffoldMessenger.of(context).showSnackBar(
         loadingSnackBar(
-          text: " Signing-In...",
+          text: l10n.signingIn,
         ),
       );
 
