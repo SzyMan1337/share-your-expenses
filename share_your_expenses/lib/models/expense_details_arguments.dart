@@ -1,6 +1,13 @@
-class ExpenseDetailsArguments {
-  final String groupId;
-  final String expenseId;
+import 'package:share_your_expenses/models/expense.dart';
 
-  ExpenseDetailsArguments(this.groupId, this.expenseId);
+class ExpenseDetailsArguments {
+  final Expense expense;
+  final String username;
+  final String currency;
+
+  ExpenseDetailsArguments(
+    this.expense,
+    this.username,
+    this.currency,
+  );
 }

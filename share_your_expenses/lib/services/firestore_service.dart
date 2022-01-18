@@ -79,8 +79,14 @@ class FirestoreService {
     }
   }
 
-  Future<void> createExpense(String expensName, String description,
-      DateTime date, double amount, String userId, String groupId) async {
+  Future<void> createExpense(
+      String expensName,
+      String description,
+      DateTime date,
+      double amount,
+      String userId,
+      String groupId,
+      String fileNameRef) async {
     try {
       final String expensePath = ApiPath.groupExpenses(groupId);
 
@@ -90,6 +96,7 @@ class FirestoreService {
         'amount': amount,
         'userId': userId,
         'date': date,
+        'photo': fileNameRef,
       });
     } catch (e) {
       log('Create Expense Error');

@@ -53,172 +53,186 @@ class _AddExepensesGroupScreenState extends State<AddExepensesGroupScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  TextFormField(
-                    key: const Key('groutpTitle'),
-                    controller: _groupNameFieldController,
-                    decoration: InputDecoration(
-                      labelText: l10n.groupTitle,
-                      hintText: l10n.name,
-                      labelStyle: const TextStyle(color: darkBrown),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade400,
+        child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 32.0),
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        key: const Key('groutpTitle'),
+                        controller: _groupNameFieldController,
+                        decoration: InputDecoration(
+                          labelText: l10n.groupTitle,
+                          hintText: l10n.name,
+                          labelStyle: const TextStyle(color: darkBrown),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: darkBrown),
+                          ),
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: darkBrown),
+                          ),
                         ),
+                        cursorColor: darkBrown,
+                        validator: validators.validateGroupName,
                       ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: darkBrown),
-                      ),
-                      border: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: darkBrown),
-                      ),
-                    ),
-                    cursorColor: darkBrown,
-                    validator: validators.validateGroupName,
-                  ),
-                  TextFormField(
-                    key: const Key('groupDescription'),
-                    controller: _groupDescriptionFieldController,
-                    decoration: InputDecoration(
-                      labelText: l10n.description,
-                      hintText: l10n.tripToWarsaw,
-                      labelStyle: const TextStyle(color: darkBrown),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade400,
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        key: const Key('groupDescription'),
+                        controller: _groupDescriptionFieldController,
+                        decoration: InputDecoration(
+                          labelText: l10n.description,
+                          hintText: l10n.tripToWarsaw,
+                          labelStyle: const TextStyle(color: darkBrown),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: darkBrown),
+                          ),
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: darkBrown),
+                          ),
                         ),
+                        cursorColor: darkBrown,
                       ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: darkBrown),
-                      ),
-                      border: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: darkBrown),
-                      ),
-                    ),
-                    cursorColor: darkBrown,
-                  ),
-                  TextFormField(
-                    key: const Key('currency'),
-                    keyboardType: TextInputType.datetime,
-                    controller: _groupCurrencyFieldController,
-                    decoration: InputDecoration(
-                      labelText: l10n.currency,
-                      hintText: l10n.selectCurrency,
-                      labelStyle: const TextStyle(color: darkBrown),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade400,
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        key: const Key('currency'),
+                        keyboardType: TextInputType.datetime,
+                        controller: _groupCurrencyFieldController,
+                        decoration: InputDecoration(
+                          labelText: l10n.currency,
+                          hintText: l10n.selectCurrency,
+                          labelStyle: const TextStyle(color: darkBrown),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: darkBrown),
+                          ),
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: darkBrown),
+                          ),
                         ),
-                      ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: darkBrown),
-                      ),
-                      border: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: darkBrown),
-                      ),
-                    ),
-                    validator: validators.validateGroupCurrency,
-                    onTap: () async {
-                      FocusScope.of(context).requestFocus(FocusNode());
+                        validator: validators.validateGroupCurrency,
+                        onTap: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
 
-                      showCurrencyPicker(
-                        context: context,
-                        showFlag: true,
-                        showCurrencyName: true,
-                        showCurrencyCode: true,
-                        onSelect: (Currency currency) {
-                          _currency = currency;
-                          setState(() {
-                            _groupCurrencyFieldController.text =
-                                (_currency == null
-                                    ? l10n.selectCurrency
-                                    : _currency!.code);
-                          });
+                          showCurrencyPicker(
+                            context: context,
+                            showFlag: true,
+                            showCurrencyName: true,
+                            showCurrencyCode: true,
+                            onSelect: (Currency currency) {
+                              _currency = currency;
+                              setState(() {
+                                _groupCurrencyFieldController.text =
+                                    (_currency == null
+                                        ? l10n.selectCurrency
+                                        : _currency!.code);
+                              });
+                            },
+                            favorite: ['PLN', 'USD', 'EUR'],
+                          );
                         },
-                        favorite: ['PLN', 'USD', 'EUR'],
-                      );
-                    },
-                    cursorColor: darkBrown,
-                  ),
-                  const SizedBox(height: 15),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      l10n.category,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: darkBrown,
+                        cursorColor: darkBrown,
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 50),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          GroupCategory.couple.iconData,
-                          size: 40,
-                          color: getColor(_category == GroupCategory.couple),
+                      const SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          l10n.category,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: darkBrown,
+                          ),
                         ),
-                        onPressed: () {
-                          _category = GroupCategory.couple;
-                          setState(() {});
-                        },
                       ),
-                      const Spacer(),
-                      IconButton(
-                        icon: Icon(
-                          GroupCategory.sharedHouse.iconData,
-                          size: 40,
-                          color:
-                              getColor(_category == GroupCategory.sharedHouse),
-                        ),
-                        onPressed: () {
-                          _category = GroupCategory.sharedHouse;
-                          setState(() {});
-                        },
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: Icon(
-                          GroupCategory.event.iconData,
-                          size: 40,
-                          color: getColor(_category == GroupCategory.event),
-                        ),
-                        onPressed: () {
-                          _category = GroupCategory.event;
-                          setState(() {});
-                        },
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: Icon(
-                          GroupCategory.other.iconData,
-                          size: 40,
-                          color: getColor(_category == GroupCategory.other),
-                        ),
-                        onPressed: () {
-                          _category = GroupCategory.other;
-                          setState(() {});
-                        },
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              GroupCategory.couple.iconData,
+                              size: 40,
+                              color:
+                                  getColor(_category == GroupCategory.couple),
+                            ),
+                            onPressed: () {
+                              _category = GroupCategory.couple;
+                              setState(() {});
+                            },
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: Icon(
+                              GroupCategory.sharedHouse.iconData,
+                              size: 40,
+                              color: getColor(
+                                  _category == GroupCategory.sharedHouse),
+                            ),
+                            onPressed: () {
+                              _category = GroupCategory.sharedHouse;
+                              setState(() {});
+                            },
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: Icon(
+                              GroupCategory.event.iconData,
+                              size: 40,
+                              color: getColor(_category == GroupCategory.event),
+                            ),
+                            onPressed: () {
+                              _category = GroupCategory.event;
+                              setState(() {});
+                            },
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: Icon(
+                              GroupCategory.other.iconData,
+                              size: 40,
+                              color: getColor(_category == GroupCategory.other),
+                            ),
+                            onPressed: () {
+                              _category = GroupCategory.other;
+                              setState(() {});
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-              CommonButton(
-                onPressed: () {
-                  _onSubmitSaveButton(l10n);
-                },
-                text: l10n.save,
-              ),
-            ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                CommonButton(
+                  onPressed: () {
+                    _onSubmitSaveButton(l10n);
+                  },
+                  text: l10n.save,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
           ),
         ),
       ),

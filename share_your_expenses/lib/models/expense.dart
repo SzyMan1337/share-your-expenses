@@ -10,6 +10,7 @@ class Expense {
   final String description;
   final double amount;
   final String userId;
+  final String photo;
 
   @JsonKey(fromJson: _fromJson, toJson: _toJson)
   final DateTime date;
@@ -20,6 +21,7 @@ class Expense {
     required this.amount,
     required this.userId,
     required this.date,
+    required this.photo,
     this.id,
   });
 

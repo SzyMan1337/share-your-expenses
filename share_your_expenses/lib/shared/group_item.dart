@@ -58,11 +58,13 @@ class GroupItem extends StatelessWidget {
             ),
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ExpensesScreen(
-                            groupId: group.id!,
-                          )));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExpensesScreen(
+                    groupId: group.id!,
+                  ),
+                ),
+              );
             },
           ),
         );
