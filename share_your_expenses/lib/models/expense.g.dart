@@ -12,7 +12,6 @@ Expense _$ExpenseFromJson(Map<String, dynamic> json) => Expense(
       amount: (json['amount'] as num).toDouble(),
       userId: json['userId'] as String,
       date: Expense._fromJson(json['date'] as Timestamp),
-      photo: json['photo'] as String,
       id: json['id'] as String?,
     );
 
@@ -22,6 +21,5 @@ Map<String, dynamic> _$ExpenseToJson(Expense instance) => <String, dynamic>{
       'description': instance.description,
       'amount': instance.amount,
       'userId': instance.userId,
-      'photo': instance.photo,
       'date': Expense._toJson(instance.date),
     };
