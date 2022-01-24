@@ -55,74 +55,85 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Center(
-                child: Image.asset(
-                  "assets/images/login.jpg",
-                  height: MediaQuery.of(context).size.height / 3,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fitWidth,
+        child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              LoginInputs(
-                emailFieldController: _emailFieldController,
-                passwordFieldController: _passwordFieldController,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/forgot-password',
-                      );
-                    },
-                    child: Text(
-                      l10n.forgotPassword,
-                      style: const TextStyle(
-                        color: darkBrown,
-                        fontWeight: FontWeight.w500,
+                Center(
+                  child: Image.asset(
+                    "assets/images/login.jpg",
+                    height: MediaQuery.of(context).size.height / 3,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                LoginInputs(
+                  emailFieldController: _emailFieldController,
+                  passwordFieldController: _passwordFieldController,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/forgot-password',
+                        );
+                      },
+                      child: Text(
+                        l10n.forgotPassword,
+                        style: const TextStyle(
+                          color: darkBrown,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              CommonButton(
-                onPressed: () {
-                  _onSubmitLoginButton(l10n);
-                },
-                text: l10n.login,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    l10n.noAccountQuestion,
-                    style: TextStyle(color: Colors.grey.shade600),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/register',
-                      );
-                    },
-                    child: Text(
-                      l10n.register,
-                      style: const TextStyle(
-                        color: darkBrown,
-                        fontWeight: FontWeight.w500,
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonButton(
+                  onPressed: () {
+                    _onSubmitLoginButton(l10n);
+                  },
+                  text: l10n.login,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      l10n.noAccountQuestion,
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/register',
+                        );
+                      },
+                      child: Text(
+                        l10n.register,
+                        style: const TextStyle(
+                          color: darkBrown,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

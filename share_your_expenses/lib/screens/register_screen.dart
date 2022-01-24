@@ -60,78 +60,90 @@ class _RegisterSreenState extends State<RegisterSreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Center(
-                child: Image.asset(
-                  "assets/images/login.jpg",
-                  height: MediaQuery.of(context).size.height / 3,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fitWidth,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              TextFormField(
-                key: const Key('username'),
-                controller: _usernameFieldController,
-                decoration: InputDecoration(
-                  labelText: l10n.username,
-                  hintText: 'Bob123',
-                  labelStyle: const TextStyle(color: darkBrown),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: darkBrown),
-                  ),
-                  border: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: darkBrown),
+                Center(
+                  child: Image.asset(
+                    "assets/images/login.jpg",
+                    height: MediaQuery.of(context).size.height / 3,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
-                cursorColor: darkBrown,
-                validator: validators.validateUserName,
-              ),
-              LoginInputs(
-                emailFieldController: _emailFieldController,
-                passwordFieldController: _passwordFieldController,
-              ),
-              CommonButton(
-                onPressed: () {
-                  _onSubmitRegisterButton(context, l10n);
-                },
-                text: l10n.register,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    l10n.haveAccount,
-                    style: TextStyle(color: Colors.grey.shade600),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/login',
-                      );
-                    },
-                    child: Text(
-                      l10n.signIn,
-                      style: const TextStyle(
-                        color: darkBrown,
-                        fontWeight: FontWeight.w500,
+                const SizedBox(height: 10),
+                TextFormField(
+                  key: const Key('username'),
+                  controller: _usernameFieldController,
+                  decoration: InputDecoration(
+                    labelText: l10n.username,
+                    hintText: 'Bob123',
+                    labelStyle: const TextStyle(color: darkBrown),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
                       ),
                     ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: darkBrown),
+                    ),
+                    border: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: darkBrown),
+                    ),
                   ),
-                ],
-              ),
-            ],
+                  cursorColor: darkBrown,
+                  validator: validators.validateUserName,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                LoginInputs(
+                  emailFieldController: _emailFieldController,
+                  passwordFieldController: _passwordFieldController,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonButton(
+                  onPressed: () {
+                    _onSubmitRegisterButton(context, l10n);
+                  },
+                  text: l10n.register,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      l10n.haveAccount,
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/login',
+                        );
+                      },
+                      child: Text(
+                        l10n.signIn,
+                        style: const TextStyle(
+                          color: darkBrown,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

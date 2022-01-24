@@ -41,7 +41,7 @@ class LoginInputs extends StatelessWidget {
           cursorColor: darkBrown,
           validator: validators.validateEmail,
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 20),
         TextFormField(
           key: const Key('password'),
           controller: passwordFieldController,
