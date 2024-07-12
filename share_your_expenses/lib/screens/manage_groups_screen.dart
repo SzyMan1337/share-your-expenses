@@ -7,7 +7,7 @@ import 'package:share_your_expenses/shared/menu_bottom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ManageGroupsScreen extends StatefulWidget {
-  const ManageGroupsScreen({Key? key}) : super(key: key);
+  const ManageGroupsScreen({super.key});
 
   @override
   _ManageGroupsScreenState createState() => _ManageGroupsScreenState();

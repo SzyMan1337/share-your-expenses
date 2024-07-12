@@ -11,7 +11,7 @@ import 'package:share_your_expenses/screens/register_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShareExpensesApp extends StatelessWidget {
-  const ShareExpensesApp({Key? key}) : super(key: key);
+  const ShareExpensesApp({super.key});
 
   @override
   Widget build(BuildContext context) {

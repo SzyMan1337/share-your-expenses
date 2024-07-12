@@ -6,10 +6,10 @@ import 'package:share_your_expenses/services/firestore_service.dart';
 
 class GroupItem extends StatelessWidget {
   GroupItem({
-    Key? key,
+    super.key,
     required this.animation,
     required this.group,
-  }) : super(key: key);
+  });
 
   final FirestoreService _firestoreService = FirestoreService.instance;
 
@@ -43,11 +43,11 @@ class GroupItem extends StatelessWidget {
               contentPadding: const EdgeInsets.all(15),
               title: Text(
                 newGroup.name,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               subtitle: Text(
                 newGroup.description,
-                style: Theme.of(context).textTheme.subtitle2,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               leading: Icon(
                 group.category != null ? group.category!.iconData : Icons.alarm,

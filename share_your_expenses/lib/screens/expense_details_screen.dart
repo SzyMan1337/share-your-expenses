@@ -7,9 +7,9 @@ import 'package:share_your_expenses/shared/const.dart';
 
 class ExpenseDetailsScreen extends StatefulWidget {
   const ExpenseDetailsScreen({
-    Key? key,
+    super.key,
     required this.expense,
-  }) : super(key: key);
+  });
 
   final ExpenseDetailsArguments expense;
 
@@ -93,16 +93,14 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        l10n.amount + ": ",
+                        "${l10n.amount}: ",
                         style: const TextStyle(
                           fontSize: 16,
                           color: darkBrown,
                         ),
                       ),
                       Text(
-                        widget.expense.expense.amount.toStringAsFixed(2) +
-                            " " +
-                            widget.expense.currency,
+                        "${widget.expense.expense.amount.toStringAsFixed(2)} ${widget.expense.currency}",
                         style: const TextStyle(
                           fontSize: 16,
                           color: darkBrown,
@@ -118,7 +116,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        l10n.username + ": ",
+                        "${l10n.username}: ",
                         style: const TextStyle(
                           fontSize: 16,
                           color: darkBrown,
@@ -141,7 +139,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        l10n.date + ": ",
+                        "${l10n.date}: ",
                         style: const TextStyle(
                           fontSize: 16,
                           color: darkBrown,

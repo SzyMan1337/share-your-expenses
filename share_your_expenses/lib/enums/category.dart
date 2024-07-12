@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,9 +13,6 @@ enum GroupCategory {
 }
 
 extension GroupCategoryExtension on GroupCategory {
-  String get name {
-    return describeEnum(this);
-  }
 
   IconData get iconData {
     switch (this) {

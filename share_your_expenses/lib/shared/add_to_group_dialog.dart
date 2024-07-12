@@ -9,8 +9,8 @@ import 'package:share_your_expenses/utils/validators.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> showAddToGroupDialog(BuildContext context, String groupId) async {
-  final _usernameToAddFieldController = TextEditingController();
-  final FirestoreService _firestoreService = FirestoreService.instance;
+  final usernameToAddFieldController = TextEditingController();
+  final FirestoreService firestoreService = FirestoreService.instance;
   final formKey = GlobalKey<FormState>();
 
   return showDialog<void>(
@@ -29,7 +29,7 @@ Future<void> showAddToGroupDialog(BuildContext context, String groupId) async {
                   children: <Widget>[
                     TextFormField(
                       key: const Key('usernameToAdd'),
-                      controller: _usernameToAddFieldController,
+                      controller: usernameToAddFieldController,
                       decoration: InputDecoration(
                         labelText: l10n.username,
                         hintText: l10n.username,
@@ -63,15 +63,15 @@ Future<void> showAddToGroupDialog(BuildContext context, String groupId) async {
                     ),
                   );
 
-                  FirestoreUser? user = await _firestoreService
-                      .getUserByUsername(_usernameToAddFieldController.text);
+                  FirestoreUser? user = await firestoreService
+                      .getUserByUsername(usernameToAddFieldController.text);
 
                   if (user == null) {
                     showAlertDialog(l10n.userDoesNotExistsUsername, context);
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     return;
                   } else {
-                    await _firestoreService.addUserToGroup(
+                    await firestoreService.addUserToGroup(
                       groupId,
                       user.id,
                     );

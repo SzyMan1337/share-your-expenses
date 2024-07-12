@@ -5,10 +5,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginInputs extends StatelessWidget {
   const LoginInputs({
-    Key? key,
+    super.key,
     required this.emailFieldController,
     required this.passwordFieldController,
-  }) : super(key: key);
+  });
 
   final TextEditingController emailFieldController;
   final TextEditingController passwordFieldController;

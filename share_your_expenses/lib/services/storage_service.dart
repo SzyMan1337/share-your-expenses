@@ -14,7 +14,7 @@ class StorageService {
     final randomId = const Uuid().v4().toString();
     TaskSnapshot snapshot = await _firebaseStorage
         .ref()
-        .child('expenses/' + randomId)
+        .child('expenses/$randomId')
         .putFile(file);
     return snapshot.ref.getDownloadURL();
   }

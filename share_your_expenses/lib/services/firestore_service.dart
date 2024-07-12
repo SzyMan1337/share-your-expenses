@@ -65,10 +65,10 @@ class FirestoreService {
         currency: currency,
       );
 
-      DocumentReference _docRef =
+      DocumentReference docRef =
           await _firebaseFirestore.collection(groupsPath).add(group.toJson());
 
-      List<String> groups = [_docRef.id];
+      List<String> groups = [docRef.id];
       final String userPath = ApiPath.user(userId);
       await _firebaseFirestore.doc(userPath).update({
         'groups': FieldValue.arrayUnion(groups),

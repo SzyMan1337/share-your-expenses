@@ -16,9 +16,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({
-    Key? key,
+    super.key,
     required this.groupId,
-  }) : super(key: key);
+  });
   final String groupId;
   @override
   _AddExpenseScreenState createState() => _AddExpenseScreenState();

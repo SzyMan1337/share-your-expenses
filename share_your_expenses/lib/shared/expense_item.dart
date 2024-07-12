@@ -8,12 +8,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExpenseItem extends StatefulWidget {
   const ExpenseItem({
-    Key? key,
+    super.key,
     required this.animation,
     required this.expense,
     required this.groupId,
     required this.currency,
-  }) : super(key: key);
+  });
 
   final Expense expense;
   final String groupId;
@@ -64,14 +64,12 @@ class _ExpenseItemState extends State<ExpenseItem> {
                 children: [
                   Text(
                     newExpense.name,
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const Spacer(),
                   Text(
-                    newExpense.amount.toStringAsFixed(2) +
-                        " " +
-                        widget.currency,
-                    style: Theme.of(context).textTheme.headline5,
+                    "${newExpense.amount.toStringAsFixed(2)} ${widget.currency}",
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
               ),
@@ -79,12 +77,12 @@ class _ExpenseItemState extends State<ExpenseItem> {
                 children: [
                   Text(
                     l10n!.paidBy + userName,
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Spacer(),
                   Text(
                     DateFormat("yyyy-MM-dd").format(newExpense.date),
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ],
               ),

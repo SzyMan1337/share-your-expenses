@@ -10,7 +10,7 @@ import 'package:share_your_expenses/utils/validators.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddExepensesGroupScreen extends StatefulWidget {
-  const AddExepensesGroupScreen({Key? key}) : super(key: key);
+  const AddExepensesGroupScreen({super.key});
 
   @override
   _AddExepensesGroupScreenState createState() =>

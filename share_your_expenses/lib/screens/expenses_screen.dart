@@ -7,9 +7,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExpensesScreen extends StatefulWidget {
   const ExpensesScreen({
-    Key? key,
+    super.key,
     required this.groupId,
-  }) : super(key: key);
+  });
 
   final String groupId;
   @override

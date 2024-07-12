@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class ImageFullScreen extends StatelessWidget {
   const ImageFullScreen({
-    Key? key,
+    super.key,
     required this.photo,
     required this.expenseTitle,
-  }) : super(key: key);
+  });
   final String photo;
   final String expenseTitle;
 

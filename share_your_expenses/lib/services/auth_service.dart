@@ -39,6 +39,7 @@ class AuthService {
     } catch (e) {
       showAlertDialog(e.toString(), context);
     }
+    return null;
   }
 
   Future<User?> createUserWithEmailAndPassword({
@@ -73,6 +74,7 @@ class AuthService {
     } catch (e) {
       showAlertDialog(e.toString(), context);
     }
+    return null;
   }
 
   Future<void> signOut() async {

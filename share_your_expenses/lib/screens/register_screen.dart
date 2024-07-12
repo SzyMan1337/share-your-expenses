@@ -12,7 +12,7 @@ import 'package:share_your_expenses/utils/validators.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterSreen extends StatefulWidget {
-  const RegisterSreen({Key? key}) : super(key: key);
+  const RegisterSreen({super.key});
 
   @override
   _RegisterSreenState createState() => _RegisterSreenState();

@@ -3,9 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuBottom extends StatefulWidget {
   const MenuBottom({
-    Key? key,
+    super.key,
     required this.selected,
-  }) : super(key: key);
+  });
 
   final int selected;
   @override
